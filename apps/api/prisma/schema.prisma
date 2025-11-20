@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String    @unique @db.VarChar(50)
+  email    String    @unique @db.VarChar(255)
+  password String    @db.VarChar(255)
+  avatar   String
+  role     Role      @default(READER)
+  posts    Post[]
+  comments Comment[]
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  user        User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    Int
+  title       String    @db.VarChar(255)
+  slug        String    @unique
+  content     String
+  snipet      String    @db.VarChar(255)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  published   Boolean   @default(false)
+  publishedAt DateTime?
+  comments    Comment[]
+
+  @@index([slug])
+  @@index([published, publishedAt])
+}
+
+model Comment {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    Int
+  post        Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId      Int
+  content     String
+  publishedAt DateTime @default(now())
+
+  @@index([authorId])
+  @@index([postId])
+}
+
+enum Role {
+  READER
+  WRITER
+}
