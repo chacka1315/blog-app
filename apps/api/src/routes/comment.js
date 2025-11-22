@@ -4,6 +4,7 @@ import auth from '../middlewares/auth.js';
 import { commentValidation } from '../middlewares/validations.js';
 
 const commentRouter = Router({ mergeParams: true });
+const adminCommentRouter = Router();
 
 commentRouter.get('/', commentController.postComments_get);
 commentRouter.get('/:commentid', commentController.singleComment_get);
@@ -15,4 +16,7 @@ commentRouter.post(
   commentValidation,
   commentController.createComment_post,
 );
-export default commentRouter;
+
+adminCommentRouter.get('/', commentController.allComments_get);
+
+export { commentRouter, adminCommentRouter };

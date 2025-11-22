@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import auth from '../middlewares/auth.js';
 import { postValidation } from '../middlewares/validations.js';
 import postController from '../controllers/postController.js';
-import commentRouter from './comment.js';
+import { commentRouter } from './comment.js';
 
 const postRouter = Router();
 const adminPostRouter = Router();

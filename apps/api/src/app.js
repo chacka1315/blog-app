@@ -20,13 +20,13 @@ app.use('/api', blog);
 
 // Blog routing
 blog.use('/posts', routes.post);
-blog.use('/comments', routes.comment);
 blog.use('/auth', routes.auth);
 blog.use('/users', routes.user);
 
 //Blog routing for admins
 blogAdmin.use('/posts', routes.postAdmin);
 blogAdmin.use('/users', routes.userAdmin);
+blogAdmin.use('/comments', routes.adminComment);
 
 app.use((req, res) => {
   const error = new NotFoundError('This page does not exist.');

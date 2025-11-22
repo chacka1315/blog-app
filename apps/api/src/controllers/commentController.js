@@ -7,10 +7,33 @@ const postComments_get = async (req, res, next) => {
   const { postid } = req.params;
 
   try {
+    const postExists = await prisma.post.findUnique({
+      where: { id: Number(postid), published: true },
+    });
+
+    if (!postExists) {
+      const err = new BadRequestError('Try to get unexisted post comments ');
+      return res.status(err.statusCode).json({
+        msg: err.message,
+      });
+    }
+
     const comments = await prisma.comment.findMany({
       where: {
         postId: Number(postid),
       },
+      orderBy: { publishedAt: 'desc' },
+    });
+
+    res.json({ data: comments });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const allComments_get = async (req, res, next) => {
+  try {
+    const comments = await prisma.comment.findMany({
       orderBy: { publishedAt: 'desc' },
     });
 
@@ -58,6 +81,17 @@ const createComment_post = async (req, res, next) => {
   const { postid } = req.params;
 
   try {
+    const postExists = await prisma.post.findUnique({
+      where: { id: Number(postid), published: true },
+    });
+
+    if (!postExists) {
+      const err = new BadRequestError('Try to comment unexisted post.');
+      return res.status(err.statusCode).json({
+        msg: err.message,
+      });
+    }
+
     const comment = await prisma.comment.create({
       data: { content, postId: Number(postid), authorId: req.user.id },
     });
@@ -85,7 +119,7 @@ const comment_update = async (req, res, next) => {
 
   try {
     const comment = await prisma.comment.update({
-      where: { id: Number(commentid), authorId: req.user?.id },
+      where: { id: Number(commentid), authorId: req.user.id },
       data: { content },
     });
 
@@ -128,4 +162,5 @@ export default {
   comment_update,
   comment_delete,
   singleComment_get,
+  allComments_get,
 };

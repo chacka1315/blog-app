@@ -1,6 +1,6 @@
 import { userRouter, adminUserRouter } from './user.js';
 import { postRouter, adminPostRouter } from './post.js';
-import comment from './comment.js';
+import { commentRouter, adminCommentRouter } from './comment.js';
 import auth from './auth.js';
 
 export default {
@@ -8,6 +8,7 @@ export default {
   userAdmin: adminUserRouter,
   post: postRouter,
   postAdmin: adminPostRouter,
-  comment,
+  comment: commentRouter,
+  adminComment: adminCommentRouter,
   auth,
 };

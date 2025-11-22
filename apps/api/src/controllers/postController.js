@@ -1,4 +1,4 @@
-import utils from '../../../packages/utils/index.js';
+import utils from '../../../../packages/utils/index.js';
 import prisma from '../prisma/prisma.js';
 import { validationResult, matchedData } from 'express-validator';
 import {
