@@ -8,14 +8,15 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  username String    @unique @db.VarChar(50)
-  email    String    @unique @db.VarChar(255)
-  password String    @db.VarChar(255)
-  avatar   String
-  role     Role      @default(READER)
-  posts    Post[]
-  comments Comment[]
+  id             Int       @id @default(autoincrement())
+  username       String    @unique @db.VarChar(50)
+  email          String    @unique @db.VarChar(255)
+  password       String    @db.VarChar(255)
+  avatar         String?
+  avatarPublicId String?
+  role           Role      @default(USER)
+  posts          Post[]
+  comments       Comment[]
 }
 
 model Post {
@@ -25,7 +26,7 @@ model Post {
   title       String    @db.VarChar(255)
   slug        String    @unique
   content     String
-  snipet      String    @db.VarChar(255)
+  snippet     String    @db.VarChar(255)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   published   Boolean   @default(false)
@@ -50,6 +51,6 @@ model Comment {
 }
 
 enum Role {
-  READER
-  WRITER
+  USER
+  ADMIN
 }
