@@ -1,5 +1,14 @@
 import { Router } from 'express';
+import userController from '../controllers/userController.js';
 
 const userRouter = Router();
+const adminUserRouter = Router();
 
-export default userRouter;
+userRouter.get('/:userid', userController.user_get);
+
+adminUserRouter.get('/', userController.allUsers_get);
+adminUserRouter.put('/set-admin/:userid', userController.role_update('ADMIN'));
+adminUserRouter.put('/set-user/:userid', userController.role_update('USER'));
+adminUserRouter.get('/:userid', userController.user_get);
+
+export { userRouter, adminUserRouter };
