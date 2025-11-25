@@ -1,0 +1,164 @@
+.home_link {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--color-red);
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.home_link svg {
+  stroke-width: 3px;
+}
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bkg-color);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+  padding: 60px 0;
+}
+
+.register_form {
+  background-color: var(--color-white);
+  width: 400px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: 0.5fr 2fr;
+  height: fit-content;
+}
+
+.register_form form {
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.formHead {
+  padding: 10px 20px;
+}
+
+.formHead > h1 {
+  width: 100%;
+}
+
+.formHead div {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formHead > div p:last-child {
+  color: gray;
+  margin-top: 20px;
+}
+
+.formHead p a {
+  color: var(--color-red);
+  font-weight: 600;
+  text-decoration: none;
+}
+.formHead p a:hover {
+  text-decoration: underline;
+}
+
+.register_form section {
+  display: flex;
+  flex-direction: column;
+}
+
+.submit_btn {
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  padding: 8px 0;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.submit_btn:hover {
+  filter: brightness(0.9);
+}
+
+section.password {
+  position: relative;
+}
+
+.toggle_pwd_view {
+  background: none;
+  border: none;
+  width: fit-content;
+  position: absolute;
+  padding: 0;
+  right: 10px;
+  top: 32px;
+  color: var(--color-red);
+}
+
+.file_select input {
+  padding: 0;
+}
+
+.file_select input::file-selector-button {
+  cursor: pointer;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 5px;
+  height: 100%;
+}
+
+.file_select input::file-selector-button:hover {
+  filter: brightness(0.9);
+}
+
+.avatar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px var(--color-red) dotted;
+}
+
+@media (max-width: 700px) {
+  .home_link {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .register_form {
+    width: 90%;
+    margin-top: 20px;
+  }
+
+  .toggle_pwd_view {
+    top: 25px;
+  }
+
+  .avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px dotted var(--color-red);
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .register_form {
+    width: 70vw;
+    margin-top: 20px;
+  }
+}
