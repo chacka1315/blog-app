@@ -1,5 +1,5 @@
 {
-  "name": "@repo/utils",
+  "name": "@blog/ui",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -10,8 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "date-fns": "^4.1.0",
-    "slugify": "^1.6.6",
-    "validator": "^13.15.23"
+    "lucide-react": "^0.554.0",
+    "react-spinners": "^0.17.0"
   }
 }
