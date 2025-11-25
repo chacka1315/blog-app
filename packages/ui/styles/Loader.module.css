@@ -1,0 +1,12 @@
+.loader_circle {
+  animation: spin 0.5s infinite linear;
+}
+
+.loader_circle svg {
+  stroke-width: 3px;
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
