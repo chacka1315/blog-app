@@ -65,6 +65,6 @@ export const postValidation = [
 export const commentValidation = [
   body('content')
     .trim()
-    .isLength({ min: 2, max: 1000 })
+    .isLength({ min: 1, max: 1000 })
     .withMessage('Comment content must be between 2 and 1000 characters.'),
 ];

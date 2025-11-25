@@ -8,7 +8,27 @@ const allUsers_get = async (req, res, next) => {
       omit: { password: true },
     });
 
-    res.json({ data: users });
+    res.json(users);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const connectedUser_get = async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: req.user.id },
+      omit: { password: true },
+    });
+
+    if (!user) {
+      const error = new NotFoundError('User does not exist.');
+      return res.status(error.statusCode).json({
+        msg: error.message,
+      });
+    }
+
+    res.json(user);
   } catch (err) {
     next(err);
   }
@@ -29,7 +49,7 @@ const user_get = async (req, res, next) => {
       });
     }
 
-    res.json({ data: user });
+    res.json(user);
   } catch (err) {
     next(err);
   }
@@ -51,10 +71,10 @@ const role_update = (role) => async (req, res, next) => {
       });
     }
 
-    res.json({ data: user });
+    res.json(user);
   } catch (err) {
     next(err);
   }
 };
 
-export default { role_update, allUsers_get, user_get };
+export default { role_update, allUsers_get, user_get, connectedUser_get };

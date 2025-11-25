@@ -42,7 +42,10 @@ const signup_post = async (req, res, next) => {
       avatarPublicId: uploadResult?.public_id,
     };
 
-    const user = await prisma.user.create({ data: signupData });
+    const user = await prisma.user.create({
+      data: signupData,
+      omit: { password: true },
+    });
     res.json({ data: user });
   } catch (err) {
     next(err);

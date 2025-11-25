@@ -8,8 +8,17 @@ const adminCommentRouter = Router();
 
 commentRouter.get('/', commentController.postComments_get);
 commentRouter.get('/:commentid', commentController.singleComment_get);
-commentRouter.put('/', auth.verifyToken, commentController.comment_update);
-commentRouter.delete('/', auth.verifyToken, commentController.comment_delete);
+commentRouter.put(
+  '/:commentid',
+  auth.verifyToken,
+  commentValidation,
+  commentController.comment_update,
+);
+commentRouter.delete(
+  '/:commentid',
+  auth.verifyToken,
+  commentController.comment_delete,
+);
 commentRouter.post(
   '/',
   auth.verifyToken,

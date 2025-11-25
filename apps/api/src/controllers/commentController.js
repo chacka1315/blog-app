@@ -5,7 +5,6 @@ import { BadRequestError, UnauthorizedError } from '../errors/CustomErrors.js';
 //GET controllers
 const postComments_get = async (req, res, next) => {
   const { postid } = req.params;
-
   try {
     const postExists = await prisma.post.findUnique({
       where: { id: Number(postid), published: true },
@@ -22,10 +21,11 @@ const postComments_get = async (req, res, next) => {
       where: {
         postId: Number(postid),
       },
+      include: { user: { select: { username: true, avatar: true } } },
       orderBy: { publishedAt: 'desc' },
     });
 
-    res.json({ data: comments });
+    res.json(comments);
   } catch (err) {
     next(err);
   }
@@ -37,7 +37,7 @@ const allComments_get = async (req, res, next) => {
       orderBy: { publishedAt: 'desc' },
     });
 
-    res.json({ data: comments });
+    res.json(comments);
   } catch (err) {
     next(err);
   }
@@ -59,7 +59,7 @@ const singleComment_get = async (req, res, next) => {
       });
     }
 
-    res.json({ data: comment });
+    res.json(comment);
   } catch (err) {
     next(err);
   }
@@ -94,9 +94,12 @@ const createComment_post = async (req, res, next) => {
 
     const comment = await prisma.comment.create({
       data: { content, postId: Number(postid), authorId: req.user.id },
+      include: {
+        user: { omit: { password: true } },
+      },
     });
 
-    res.status(201).json({ data: comment });
+    res.status(201).json(comment);
   } catch (err) {
     next(err);
   }
@@ -130,7 +133,7 @@ const comment_update = async (req, res, next) => {
       });
     }
 
-    res.json({ data: comment });
+    res.json(comment);
   } catch (err) {
     next(err);
   }
@@ -141,8 +144,8 @@ const comment_delete = async (req, res, next) => {
   const { commentid } = req.params;
 
   try {
-    const comment = await prisma.post.delete({
-      where: { id: Number(commentid), authorId: req.user?.id },
+    const comment = await prisma.comment.delete({
+      where: { id: Number(commentid), authorId: req.user.id },
     });
 
     if (!comment) {
@@ -151,7 +154,7 @@ const comment_delete = async (req, res, next) => {
         msg: error.message,
       });
     }
-    res.json({ data: comment });
+    res.json(comment);
   } catch (err) {
     next(err);
   }

@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import userController from '../controllers/userController.js';
+import auth from '../middlewares/auth.js';
 
 const userRouter = Router();
 const adminUserRouter = Router();
 
+userRouter.get('/me', auth.verifyToken, userController.connectedUser_get);
 userRouter.get('/:userid', userController.user_get);
 
 adminUserRouter.get('/', userController.allUsers_get);

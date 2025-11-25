@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { NotFoundError } from './errors/CustomErrors.js';
 import routes from './routes/index.js';
 import auth from './middlewares/auth.js';
+import cors from 'cors';
 
 const app = express();
 
@@ -11,6 +12,7 @@ const blog = express.Router();
 const blogAdmin = express.Router();
 
 //globals middlewares
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));

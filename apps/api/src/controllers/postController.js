@@ -16,7 +16,7 @@ const allPosts_get = async (req, res, next) => {
       },
       orderBy: [{ createdAt: 'desc' }, { publishedAt: 'desc' }],
     });
-    res.json({ data: posts });
+    res.json(posts);
   } catch (err) {
     next(err);
   }
@@ -31,7 +31,7 @@ const publishedPosts_get = async (req, res, next) => {
       where: { published: true },
       orderBy: { createdAt: 'desc' },
     });
-    res.json({ data: posts });
+    res.json(posts);
   } catch (err) {
     next(err);
   }
@@ -50,7 +50,8 @@ const post_get = async (req, res, next) => {
         msg: error.message,
       });
     }
-    res.json({ data: post });
+
+    res.json(post);
   } catch (err) {
     next(err);
   }
@@ -69,7 +70,20 @@ const publishedPost_get = async (req, res, next) => {
         msg: error.message,
       });
     }
-    res.json({ data: post });
+    res.json(post);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const postsTitle_get = async (req, res, next) => {
+  try {
+    const postsTitle = await prisma.post.findMany({
+      where: { published: true },
+      select: { id: true, title: true, publishedAt: true, slug: true },
+      orderBy: { createdAt: 'desc' },
+    });
+    res.json(postsTitle);
   } catch (err) {
     next(err);
   }
@@ -89,7 +103,7 @@ const create_post = async (req, res, next) => {
 
   const { title, content } = matchedData(req);
   const slug = utils.createSlug(title);
-  const snippet = content.slice(255) + '...';
+  const snippet = content.slice(400) + '...';
 
   try {
     const post = await prisma.post.create({
@@ -107,7 +121,7 @@ const create_post = async (req, res, next) => {
       },
     });
 
-    return res.status(201).json({ data: post });
+    return res.status(201).json(post);
   } catch (err) {
     next(err);
   }
@@ -142,7 +156,7 @@ const post_update = async (req, res, next) => {
       });
     }
 
-    res.json({ data: post });
+    res.json(post);
   } catch (err) {
     next(err);
   }
@@ -167,7 +181,7 @@ const publish_update = async (req, res, next) => {
       });
     }
 
-    res.json({ data: post });
+    res.json(post);
   } catch (err) {
     next(err);
   }
@@ -192,7 +206,7 @@ const unpublish_update = async (req, res, next) => {
       });
     }
 
-    res.json({ data: post });
+    res.json(post);
   } catch (err) {
     next(err);
   }
@@ -208,7 +222,7 @@ const publishAll_update = async (req, res, next) => {
       },
     });
 
-    res.json({ data: updatedCount });
+    res.json(updatedCount);
   } catch (err) {
     next(err);
   }
@@ -230,7 +244,7 @@ const post_delete = async (req, res, next) => {
       });
     }
 
-    res.json({ data: post });
+    res.json(post);
   } catch (err) {
     next(err);
   }
@@ -247,4 +261,5 @@ export default {
   post_delete,
   post_update,
   unpublish_update,
+  postsTitle_get,
 };

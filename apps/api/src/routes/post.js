@@ -7,6 +7,7 @@ const postRouter = Router();
 const adminPostRouter = Router();
 
 postRouter.get('/', postController.publishedPosts_get);
+postRouter.get('/archive', postController.postsTitle_get);
 postRouter.use('/:postid/comments', commentRouter);
 postRouter.get('/:slug', postController.publishedPost_get);
 
