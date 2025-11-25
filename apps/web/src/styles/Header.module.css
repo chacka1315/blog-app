@@ -1,0 +1,150 @@
+header {
+  position: sticky;
+  top: 0;
+  background-color: rgb(255, 255, 255, 0.97);
+  z-index: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 60px;
+  height: 100%;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a:hover {
+  color: var(--color-black);
+}
+
+.logo {
+  color: var(--color-red);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.sub_btn {
+  background: none;
+  padding: 0;
+  color: var(--color-grey);
+}
+
+.sub_btn:hover {
+  color: var(--highlight-color);
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  gap: 20px;
+  color: var(--color-grey);
+}
+
+.header i:hover {
+  color: var(--highlight-color);
+}
+
+.login_link,
+.logout_link {
+  color: var(--color-white);
+  background-color: var(--color-red);
+  display: flex;
+  align-items: center;
+  padding: 8px 7px;
+  border-radius: 7px;
+  font-size: 15px;
+  gap: 2px;
+  border: none;
+}
+
+.login_link:hover,
+.logout_link:hover {
+  filter: brightness(0.9);
+}
+
+.login_link svg,
+.logout_link svg {
+  min-width: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  position: absolute;
+  right: 60px;
+  transform: translateY(200%);
+}
+
+.avatar p {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--color-black);
+}
+.avatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.menu_toggle {
+  background: none;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+}
+
+.menu_toggle svg {
+  transform-origin: center;
+  animation: toggle-btn 0.3s;
+  width: 30px;
+  height: 30px;
+  stroke-width: 2px;
+}
+
+@keyframes toggle-btn {
+  from {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .links {
+    display: none;
+  }
+
+  .header {
+    padding: 0 20px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .header {
+    padding: 0 20px;
+  }
+
+  .menu_toggle {
+    display: none;
+  }
+}
+
+@media (min-width: 1001px) {
+  .menu_toggle {
+    display: none;
+  }
+}

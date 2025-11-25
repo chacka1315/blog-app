@@ -1,0 +1,25 @@
+footer {
+  border-top: 2px solid var(--color-black);
+  margin-top: 50px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--color-black);
+  position: sticky;
+  bottom: 0;
+}
+
+.footer p,
+.footer div {
+  width: 100%;
+  text-align: center;
+}
+
+.footer img {
+  width: 100%;
+  height: auto;
+}
