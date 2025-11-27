@@ -121,10 +121,19 @@ const comment_update = async (req, res, next) => {
   const { commentid } = req.params;
 
   try {
-    const comment = await prisma.comment.update({
-      where: { id: Number(commentid), authorId: req.user.id },
-      data: { content },
-    });
+    let comment;
+
+    if (req.user.role === 'ADMIN') {
+      comment = await prisma.comment.update({
+        where: { id: Number(commentid) },
+        data: { content },
+      });
+    } else {
+      comment = await prisma.comment.update({
+        where: { id: Number(commentid), authorId: req.user.id },
+        data: { content },
+      });
+    }
 
     if (!comment) {
       const error = new UnauthorizedError('Not authorized to update.');
@@ -142,20 +151,27 @@ const comment_update = async (req, res, next) => {
 //DELETE controllers
 const comment_delete = async (req, res, next) => {
   const { commentid } = req.params;
+  console.log(commentid, req.user.id);
 
   try {
-    const comment = await prisma.comment.delete({
-      where: { id: Number(commentid), authorId: req.user.id },
-    });
+    let comment;
 
-    if (!comment) {
-      const error = new UnauthorizedError('Not authorized to delete.');
-      return res.status(error.statusCode).json({
-        msg: error.message,
+    if (req.user.role === 'ADMIN') {
+      comment = await prisma.comment.delete({
+        where: { id: Number(commentid) },
+      });
+    } else {
+      comment = await prisma.comment.delete({
+        where: { id: Number(commentid), authorId: req.user.id },
       });
     }
+
     res.json(comment);
   } catch (err) {
+    if (err.code === 'P2025') {
+      const error = new UnauthorizedError('Not authorized to update.');
+      return res.status(error.statusCode).json({ msg: error.message });
+    }
     next(err);
   }
 };

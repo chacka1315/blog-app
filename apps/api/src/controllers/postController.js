@@ -14,7 +14,7 @@ const allPosts_get = async (req, res, next) => {
       include: {
         user: { select: { username: true, avatar: true } },
       },
-      orderBy: [{ createdAt: 'desc' }, { publishedAt: 'desc' }],
+      orderBy: [{ published: 'asc' }, { updatedAt: 'desc' }],
     });
     res.json(posts);
   } catch (err) {
@@ -101,9 +101,8 @@ const create_post = async (req, res, next) => {
     });
   }
 
-  const { title, content } = matchedData(req);
+  const { title, snippet, content } = matchedData(req);
   const slug = utils.createSlug(title);
-  const snippet = content.slice(400) + '...';
 
   try {
     const post = await prisma.post.create({
@@ -112,7 +111,7 @@ const create_post = async (req, res, next) => {
         title,
         content,
         slug,
-        snippet,
+        snippet: snippet + '...',
       },
       include: {
         user: {
@@ -129,6 +128,8 @@ const create_post = async (req, res, next) => {
 
 //UPDATE controllers
 const post_update = async (req, res, next) => {
+  console.log('REC:', req.body);
+
   const validationErr = validationResult(req);
   if (!validationErr.isEmpty()) {
     const errors = validationErr.array();
@@ -139,14 +140,13 @@ const post_update = async (req, res, next) => {
     });
   }
 
-  const { title, content } = matchedData(req);
+  const { title, snippet, content } = matchedData(req);
   const slug = utils.createSlug(title);
-  const snippet = content.slice(255) + '...';
   const { postid } = req.params;
   try {
     const post = await prisma.post.update({
       where: { id: Number(postid), authorId: req.user.id },
-      data: { title, slug, snippet, content },
+      data: { title, slug, snippet: snippet + '...', content },
     });
 
     if (!post) {
