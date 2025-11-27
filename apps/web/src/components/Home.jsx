@@ -5,7 +5,6 @@ import api from '../../../../packages/client/index';
 import { HashLoader } from '../../../../packages/ui/Loader';
 import utils from '../../../../packages/utils/index';
 import { useState, useEffect } from 'react';
-import { ChevronRight } from 'lucide-react';
 
 const Home = function () {
   const [posts, setPosts] = useState(null);
@@ -21,8 +20,6 @@ const Home = function () {
 
         setError(null);
       } catch (error) {
-        console.log(error.msg || 'Something went wrong.');
-
         setPosts(null);
         setError(error.msg || 'Something went wrong.');
       } finally {

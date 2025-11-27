@@ -51,7 +51,10 @@ const Article = function () {
               {utils.formatPostDate(post.publishedAt)}
             </p>
             <h1>{post.title}</h1>
-            <p className={styles.content}>{post.content}</p>
+            <div
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              className={styles.article_content}
+            ></div>
           </section>
           <Comments postid={post.id} user={user} />
         </>
@@ -138,6 +141,7 @@ function Comments({ postid, user }) {
             id="new_comment"
             onChange={handleCommentChange}
             value={newComment}
+            spellCheck="false"
             placeholder="Comment the article..."
             className={styles.comment_area}
           ></textarea>
@@ -234,6 +238,7 @@ const CommentItem = function ({ updateComments, comment, user, updateErr }) {
             id="new_comment"
             onChange={handleContentChange}
             value={content}
+            spellCheck="false"
             className={styles.update_comment_area}
           ></textarea>
           <Button type="submit">{isSending ? <LoaderCircle /> : 'OK'}</Button>
