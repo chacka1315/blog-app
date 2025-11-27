@@ -14,11 +14,13 @@ commentRouter.put(
   commentValidation,
   commentController.comment_update,
 );
+
 commentRouter.delete(
   '/:commentid',
   auth.verifyToken,
   commentController.comment_delete,
 );
+
 commentRouter.post(
   '/',
   auth.verifyToken,

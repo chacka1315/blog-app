@@ -16,6 +16,7 @@ adminPostRouter.post('/', postValidation, postController.create_post);
 adminPostRouter.put('/publish', postController.publishAll_update);
 adminPostRouter.put('/publish/:postid', postController.publish_update);
 adminPostRouter.put('/unpublish/:postid', postController.unpublish_update);
+adminPostRouter.use('/:postid/comments', commentRouter);
 adminPostRouter.get('/:slug', postController.post_get);
 adminPostRouter.put('/:postid', postValidation, postController.post_update);
 adminPostRouter.delete('/:postid', postController.post_delete);
