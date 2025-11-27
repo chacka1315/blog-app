@@ -1,0 +1,14 @@
+.layout {
+  display: grid;
+  grid-template-rows: 70px 1fr;
+}
+
+.main {
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .layout {
+    grid-template-rows: 50px 1fr;
+  }
+}
