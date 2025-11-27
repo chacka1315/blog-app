@@ -11,13 +11,27 @@ const app = express();
 const blog = express.Router();
 const blogAdmin = express.Router();
 
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:5174',
+    process.env.WEB_PAGE_URL,
+    process.env.ADMIN_PAGE_URL,
+  ],
+};
+
 //globals middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+morgan('combined', {
+  skip: function (req, res) {
+    return res.statusCode < 400;
+  },
+});
 
-app.use('/api/admin', auth.checkRole('ADMIN'), blogAdmin);
+app.use('/api/admin', blogAdmin);
 app.use('/api', blog);
 
 // Blog routing
@@ -26,9 +40,10 @@ blog.use('/auth', routes.auth);
 blog.use('/users', routes.user);
 
 //Blog routing for admins
-blogAdmin.use('/posts', routes.postAdmin);
-blogAdmin.use('/users', routes.userAdmin);
-blogAdmin.use('/comments', routes.adminComment);
+blogAdmin.use('/auth', routes.auth);
+blogAdmin.use('/posts', auth.checkRole('ADMIN'), routes.postAdmin);
+blogAdmin.use('/users', auth.checkRole('ADMIN'), routes.userAdmin);
+blogAdmin.use('/comments', auth.checkRole('ADMIN'), routes.adminComment);
 
 app.use((req, res) => {
   const error = new NotFoundError('This page does not exist.');
