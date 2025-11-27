@@ -1,6 +1,15 @@
 import { login, register, logout } from './auth';
 import { getMe } from './user';
-import { getPost, getPosts, getArchive } from './post';
+import {
+  getPost,
+  getPosts,
+  getArchive,
+  changePostPublishStatus,
+  updatePost,
+  deletePost,
+  createPost,
+} from './post';
+
 import {
   getComments,
   sendComment,
@@ -20,4 +29,8 @@ export default {
   sendComment,
   updateComment,
   deleteComment,
+  changePostPublishStatus,
+  createPost,
+  updatePost,
+  deletePost,
 };

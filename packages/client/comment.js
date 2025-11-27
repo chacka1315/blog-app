@@ -4,6 +4,7 @@ const token = localStorage.getItem('jwt');
 export const getComments = async function (postid) {
   const res = await fetch(`${API_URL}/posts/${postid}/comments`, {
     method: 'GET',
+    headers: { Authorization: `Bearer ${token}` },
   });
 
   let data;
